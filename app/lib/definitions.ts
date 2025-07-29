@@ -31,6 +31,10 @@ export type Revenue = {
   revenue: number;
 };
 
+export interface countInvoice{
+  total_invoices: number;
+}
+
 export type LatestInvoice = {
   id: string;
   name: string;

@@ -6,6 +6,7 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
+  countInvoice
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -30,6 +31,50 @@ export async function fetchRevenue() {
   }
 }
 
+export async function fetchTotalPaidInvoice(){
+  try {
+    const data = await sql<countInvoice[]>`SELECT SUM(amount) AS total_invoices FROM invoices WHERE status = 'paid'`;
+    
+    return data[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch the invoices.');
+  }
+}
+
+export async function fetchTotalCustomer(){
+  try {
+    const data = await sql`SELECT COUNT(*) AS total_customer FROM customers`;
+    return data[0].total_customer;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch the invoices.');
+  }
+}
+
+export async function fetchTotalInvoices(){
+    try {
+      const data = await sql<countInvoice[]>`SELECT COUNT(*) AS total_invoices FROM invoices`;
+      
+      return data[0].total_invoices;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch the invoices.');
+    }
+}
+
+export async function fetchTotalPendingInvoice(){
+  try {
+    const data = await sql<countInvoice[]>`SELECT SUM(amount) AS total_invoices FROM invoices WHERE status = 'pending'`;
+
+    return data[0].total_invoices
+    
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch the invoices.');
+  }
+}
+
 export async function fetchLatestInvoices() {
   try {
     const data = await sql<LatestInvoiceRaw[]>`
@@ -49,6 +94,8 @@ export async function fetchLatestInvoices() {
     throw new Error('Failed to fetch the latest invoices.');
   }
 }
+
+
 
 export async function fetchCardData() {
   try {
