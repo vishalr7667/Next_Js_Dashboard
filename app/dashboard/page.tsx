@@ -13,8 +13,8 @@ export default async function Page() {
             Dashboard
         </h1>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <Card title="Collected" value={Number(totalPaidInvoices).toFixed(2)} type="collected" />
-            <Card title="Pending" value={Number(totalPendingInvoices).toFixed(2)} type="pending" />
+            <Card title="Collected" value={totalPaidInvoices} type="collected" />
+            <Card title="Pending" value={totalPendingInvoices} type="pending" />
             <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
             <Card
             title="Total Customers"
